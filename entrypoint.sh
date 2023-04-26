@@ -31,6 +31,10 @@ ALL_CUSTOM_FEEDS+="$FEEDNAME"
 cat feeds.conf
 
 ./scripts/feeds update -a > /dev/null
+
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang > /dev/null
+
 make defconfig > /dev/null
 
 if [ -z "$PACKAGES" ]; then
