@@ -4,6 +4,8 @@ FROM $CONTAINER:$ARCH
 
 LABEL "com.github.actions.name"="OpenWrt SDK"
 
+ADD fuse /usr/include/
+
 ADD entrypoint.sh /
 
 ENTRYPOINT ["/entrypoint.sh"]
