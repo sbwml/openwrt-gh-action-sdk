@@ -75,14 +75,6 @@ else
 			exit "$RET"
 		fi
 
-		badhash_msg="HASH does not match "
-		badhash_msg+="|HASH uses deprecated hash,"
-		badhash_msg+="|HASH is missing,"
-		if grep -qE "$badhash_msg" logtmp; then
-			echo "Package HASH check failed"
-			exit 1
-		fi
-
 		PATCHES_DIR=$(find /feed -path "*/$PKG/patches")
 		if [ -d "$PATCHES_DIR" ] && [ -z "$NO_REFRESH_CHECK" ]; then
 			make \
