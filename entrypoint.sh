@@ -32,8 +32,13 @@ cat feeds.conf
 
 ./scripts/feeds update -a > /dev/null
 
+feeds_version=$(cat feeds.conf | head -1 | awk -F- '{print $3}')
+
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang > /dev/null
+
+rm -rf feeds/packages/lang/node
+git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-$feeds_version feeds/packages/lang/node
 
 make defconfig > /dev/null
 
