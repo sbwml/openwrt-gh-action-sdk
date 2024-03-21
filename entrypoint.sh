@@ -32,7 +32,7 @@ cat feeds.conf
 
 ./scripts/feeds update -a > /dev/null
 
-feeds_version=$(cat feeds.conf | head -1 | awk -F- '{print $3}')
+feeds_version=$(cat feeds.conf | head -1 | awk -Fopenwrt- '{print $2}')
 
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang > /dev/null
