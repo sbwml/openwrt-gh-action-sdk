@@ -52,6 +52,13 @@ group "feeds update -a"
 ./scripts/feeds update -a
 endgroup
 
+# curl/http3
+rm -rf package/libs/openssl
+rm -rf feeds/packages/libs/ngtcp2
+rm -rf feeds/packages/libs/nghttp3
+rm -rf feeds/packages/net/curl
+rm -rf feeds/base/package/libs/openssl
+
 group "make defconfig"
 make defconfig
 endgroup
