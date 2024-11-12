@@ -64,6 +64,9 @@ git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/l
 rm -rf feeds/packages/lang/node
 feeds_version=$(cat feeds.conf | head -1 | awk -Fopenwrt- '{print $2}')
 git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-$feeds_version feeds/packages/lang/node
+# hack xdp
+sed -i '/KERNEL_XDP_SOCKETS/d' package/kernel/linux/modules/netsupport.mk
+sed -i 's/xsk_diag\.ko/xsk_diag.ko@le1.0/g' package/kernel/linux/modules/netsupport.mk
 endgroup
 
 group "make defconfig"
