@@ -56,9 +56,13 @@ group "feeds update -a"
 ./scripts/feeds update -a
 endgroup
 
+group "golang 1.23.x"
 rm -rf feeds/packages/net/{v2ray-core,v2ray-geodata,v2raya,xray-core,sing-box,shadowsocks-libev}
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
+sed -i '/KERNEL_XDP_SOCKETS/d' package/kernel/linux/modules/netsupport.mk
+sed -i 's/xsk_diag\.ko/xsk_diag.ko@le1.0/g' package/kernel/linux/modules/netsupport.mk
+endgroup
 
 group "make defconfig"
 make defconfig
