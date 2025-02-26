@@ -56,10 +56,10 @@ group "feeds update -a"
 ./scripts/feeds update -a
 endgroup
 
-group "golang 1.23.x"
-# golang 1.23.x
+group "golang 1.24.x"
+# golang 1.24.x
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
 # nodejs prebuilt
 rm -rf feeds/packages/lang/node
 feeds_version=$(cat feeds.conf | head -1 | awk -Fopenwrt- '{print $2}')
