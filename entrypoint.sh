@@ -19,15 +19,22 @@ endgroup() {
 
 trap 'endgroup' ERR
 
+group "bash setup.sh"
 # snapshot containers don't ship with the SDK to save bandwidth
 # run setup.sh to download and extract the SDK
 [ ! -f setup.sh ] || bash setup.sh
+endgroup
 
 FEEDNAME="${FEEDNAME:-action}"
 BUILD_LOG="${BUILD_LOG:-1}"
 
 if [ -n "$KEY_BUILD" ]; then
 	echo "$KEY_BUILD" > key-build
+	CONFIG_SIGNED_PACKAGES="y"
+fi
+
+if [ -n "$PRIVATE_KEY" ]; then
+	echo "$PRIVATE_KEY" > private-key.pem
 	CONFIG_SIGNED_PACKAGES="y"
 fi
 
