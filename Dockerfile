@@ -6,6 +6,8 @@ LABEL "com.github.actions.name"="OpenWrt SDK"
 
 ADD fuse /usr/include/
 
+ADD bin/pahole /usr/bin/
+
 ADD entrypoint.sh /
 
 ENTRYPOINT ["/entrypoint.sh"]
