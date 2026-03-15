@@ -70,6 +70,8 @@ git clone https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/l
 # hack xdp
 sed -i '/KERNEL_XDP_SOCKETS/d' package/kernel/linux/modules/netsupport.mk
 sed -i 's/xsk_diag\.ko/xsk_diag.ko@le1.0/g' package/kernel/linux/modules/netsupport.mk
+# hack rust
+sed -i 's/llvm.download-ci-llvm=true/llvm.download-ci-llvm=false/g' feeds/packages/lang/rust/Makefile
 endgroup
 
 group "node prebuilt"
