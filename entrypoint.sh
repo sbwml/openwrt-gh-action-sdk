@@ -26,6 +26,8 @@ group "bash setup.sh"
 endgroup
 
 FEEDNAME="${FEEDNAME:-action}"
+# Build requested packages by default, otherwise just check
+BUILD="${BUILD:-1}"
 BUILD_LOG="${BUILD_LOG:-1}"
 
 if [ -n "$KEY_BUILD" ]; then
@@ -117,19 +119,21 @@ else
 			"package/$PKG/download" V=s
 		endgroup
 
-		group "make package/$PKG/check"
+		[ "$BUILD" = '1' ] && group "make package/$PKG/check"
 		make \
 			BUILD_LOG="$BUILD_LOG" \
 			IGNORE_ERRORS="$IGNORE_ERRORS" \
 			"package/$PKG/check" V=s 2>&1 | \
 				tee logtmp
-		endgroup
 
 		RET=${PIPESTATUS[0]}
+		[ "$BUILD" = '1' ] && endgroup
 
 		if [ "$RET" -ne 0 ]; then
-			echo_red   "=> Package check failed: $RET)"
+			echo 'Package check failed'
 			exit "$RET"
+		elif [ "$BUILD" = 0 ]; then
+			echo 'Package check successful'
 		fi
 
 		badhash_msg="HASH does not match "
@@ -142,12 +146,12 @@ else
 
 		PATCHES_DIR=$(find /feed -path "*/$PKG/patches")
 		if [ -d "$PATCHES_DIR" ] && [ -z "$NO_REFRESH_CHECK" ]; then
-			group "make package/$PKG/refresh"
+			[ "$BUILD" = '1' ] && group "make package/$PKG/refresh"
 			make \
 				BUILD_LOG="$BUILD_LOG" \
 				IGNORE_ERRORS="$IGNORE_ERRORS" \
 				"package/$PKG/refresh" V=s
-			endgroup
+			[ "$BUILD" = '1' ] && endgroup
 
 			if ! git -C "$PATCHES_DIR" diff --quiet -- .; then
 				echo "Dirty patches detected, please refresh and review the diff"
@@ -172,8 +176,12 @@ else
 				exit 1
 			fi
 		fi
-
 	done
+
+	if [ "$BUILD" != '1' ]; then
+		echo 'Skipping build'
+		exit
+	fi
 
 	make \
 		-f .config \
@@ -204,7 +212,10 @@ fi
 
 if [ "$INDEX" = '1' ];then
 	group "make package/index"
-	make package/index
+	make \
+		CONFIG_SIGNED_PACKAGES="$CONFIG_SIGNED_PACKAGES" \
+		V=s \
+		package/index
 	endgroup
 fi
 
