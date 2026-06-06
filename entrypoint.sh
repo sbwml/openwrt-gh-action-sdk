@@ -69,11 +69,11 @@ group "golang 1.26.x"
 # golang 1.26.x
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
-# hack xdp
-sed -i '/KERNEL_XDP_SOCKETS/d' package/kernel/linux/modules/netsupport.mk
-sed -i 's/xsk_diag\.ko/xsk_diag.ko@le1.0/g' package/kernel/linux/modules/netsupport.mk
-# hack rust
-sed -i 's/llvm.download-ci-llvm=true/llvm.download-ci-llvm=false/g' feeds/packages/lang/rust/Makefile
+endgroup
+
+group "rust - llvm.download-ci-llvm = true"
+rm -rf feeds/packages/lang/rust
+git clone https://github.com/sbwml/packages_lang_rust feeds/packages/lang/rust
 endgroup
 
 group "node prebuilt"
@@ -82,6 +82,12 @@ rm -rf feeds/packages/lang/node
 feeds_version=$(cat feeds.conf | head -1 | awk -Fopenwrt- '{print $2}')
 [ -z "$feeds_version" ] && feeds_version=24.10
 git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-$feeds_version feeds/packages/lang/node
+endgroup
+
+group "hack xdp"
+# hack xdp
+sed -i '/KERNEL_XDP_SOCKETS/d' package/kernel/linux/modules/netsupport.mk
+sed -i 's/xsk_diag\.ko/xsk_diag.ko@le1.0/g' package/kernel/linux/modules/netsupport.mk
 endgroup
 
 group "make defconfig"
