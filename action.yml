@@ -29,8 +29,7 @@ runs:
         build-args: |
           CONTAINER
           ARCH
-        cache-to: type=gha,mode=max,scope=${{ env.CONTAINER }}-${{ env.ARCH }}
-        cache-from: type=gha,scope=${{ env.CONTAINER }}-${{ env.ARCH }}
+        cache-image: false
         load: true
 
     - run: |
