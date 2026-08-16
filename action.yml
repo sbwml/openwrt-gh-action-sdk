@@ -29,7 +29,6 @@ runs:
         build-args: |
           CONTAINER
           ARCH
-        cache-image: false
         load: true
 
     - run: |
