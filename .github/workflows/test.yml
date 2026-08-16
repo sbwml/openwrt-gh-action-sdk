@@ -12,8 +12,8 @@ jobs:
       matrix:
         release:
           - master
-          - 24.10.1
-          - 23.05.5
+          - 25.12.5
+          - 24.10.7
         arch:
           - aarch64_generic
           - arm_cortex-a15_neon-vfpv4
@@ -21,7 +21,7 @@ jobs:
           - x86_64
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Add test directories
         run: mkdir artifacts feed
