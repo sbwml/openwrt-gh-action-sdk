@@ -65,10 +65,10 @@ group "feeds update -a"
 ./scripts/feeds update -a
 endgroup
 
-group "golang 1.26.x"
-# golang 1.26.x
+group "golang 1.27.x"
+# golang 1.27.x
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 27.x feeds/packages/lang/golang
 endgroup
 
 group "rust - llvm.download-ci-llvm = true"
